@@ -1,0 +1,15 @@
+.grid-container {
+  max-height: 90vh;
+  justify-content: center;
+}
+
+.arrow-container {
+  margin: 2vh 0;
+  display: flex;
+  justify-content: center;
+}
+
+.arrow-down {
+  border: 2px solid black;
+  border-radius: 100%;
+}

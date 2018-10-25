@@ -1,0 +1,64 @@
+.book-container {
+  width: 100%;
+  border-bottom: 1px solid black;
+  margin: 1vh 0;
+  transition: height 0.3s ease-in;
+  padding: 15px;
+  font-family: "Roboto", sans-serif;
+}
+
+pre {
+  font-family: "Roboto", sans-serif;
+}
+
+.basic-info-container {
+  padding: 0.2vw;
+}
+
+.title {
+  width: 80%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  resize: both;
+}
+
+.author {
+  font-style: italic;
+  font-weight: bold;
+  padding: 0 10px;
+}
+
+.trivia-container {
+  margin-top: 2vh;
+}
+
+.highlights-container {
+  margin-top: 2vh;
+  width: 30%;
+  padding: 0.3vw;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+}
+
+.summary-container {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.reader {
+  padding: 10px;
+  margin-top: 3vh;
+  margin-left: 2vw;
+  width: 50%;
+  height: 300px;
+  overflow: scroll;
+}
+
+.checked,
+.fa-star-half-o,
+.fa-star-o {
+  color: orange;
+}

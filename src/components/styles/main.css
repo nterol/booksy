@@ -1,0 +1,106 @@
+body {
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2%;
+}
+
+.error-container {
+  text-align: center;
+}
+
+/***** DYNAMIC MARKING CSS *****/
+
+@keyframes mark {
+  to {
+    background-position: -100%;
+  }
+}
+
+p,
+h1 {
+  isolation: isolate;
+}
+
+h1 mark,
+p mark {
+  /* width: 100%; */
+  width: 100vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* padding: 20px; */
+  /* font-size: 1.3rem; */
+  margin: 0;
+  /* background: white; */
+  resize: horizontal;
+}
+
+mark {
+  position: relative;
+  transition: background-position 0.4s;
+  transform: skewX(30deg);
+  padding: 0.25em 0.25em;
+  margin: 0 -0.55em;
+  background-blend-mode: multiply;
+  mix-blend-mode: multiply;
+  animation: mark linear 0.4s forwards;
+}
+
+.title-marker {
+  background: 0 0;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(101, 178, 245, 0.85) 50%
+  );
+  background-position: 0;
+  background-size: 200%;
+}
+
+.author-marker {
+  background: 0 0;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(231, 231, 6, 0.85) 50%
+  );
+  background-position: 0;
+  background-size: 200%;
+}
+
+.subject-marker {
+  background: 0 0;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(219, 112, 147, 1) 50%
+  );
+  background-position: 0;
+  background-size: 200%;
+}
+
+.date-marker {
+  background: 0 0;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(13, 190, 13, 1) 50%
+  );
+  background-position: 0;
+  background-size: 200%;
+}
+
+.common-marker {
+  background: 0 0;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(125, 255, 179, 0.7) 50%
+  );
+  background-position: 0;
+  background-size: 200%;
+}

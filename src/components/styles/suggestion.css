@@ -1,0 +1,29 @@
+.suggestions-container {
+  margin-top: 1vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 3px;
+  box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
+  width: 80%;
+  float: right;
+}
+
+.suggestion-container:focus {
+  outline: none;
+}
+
+.suggestion-holder {
+  padding: 15px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+}
+
+.suggestion-holder:hover {
+  color: blue;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.clear-suggestion {
+  text-align: center;
+}
