@@ -62,21 +62,3 @@
   border-color: rgb(101, 178, 245);
   transform: scale(0.8);
 }
-
-.back-container {
-  position: relative;
-  margin-top: 1vh;
-  height: 10vh;
-}
-
-.back-arrow-page {
-  left: 15%;
-  top: 40%;
-  transform: rotate(-133deg);
-}
-
-.back-page-holder {
-  position: absolute;
-  top: 38%;
-  left: 20%;
-}

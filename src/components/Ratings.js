@@ -8,6 +8,7 @@ export default function Ratings({ score }) {
       if (s > 0.5) return "fa-star checked";
       if (s === 0.5) return "fa-star-half-o";
       if (s <= 0) return "fa-star-o";
+      return "";
     });
   };
 
