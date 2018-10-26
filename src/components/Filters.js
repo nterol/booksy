@@ -4,6 +4,7 @@ import { MainContext } from "../pages/Main";
 import "./styles/filters.css";
 
 const Filters = () => {
+
   const filters = [
     { filter: "title", color: "rgb(101, 178, 245)" },
     { filter: "author", color: "rgb(231, 231, 6)" },

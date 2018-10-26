@@ -1,6 +1,5 @@
 import React from "react";
 
-
 /*
     This behave exactly like the Parser Component 
     except it searches for the input value

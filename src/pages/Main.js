@@ -6,6 +6,10 @@ import Search from "../components/Search";
 import Library from "../components/Library";
 import "../components/styles/main.css";
 
+/*
+  Thought that Context was more convenient than Redux for such
+  a small SPA with a single "smart" page
+*/
 export const MainContext = React.createContext();
 
 class MainProvider extends Component {
@@ -22,43 +26,46 @@ class MainProvider extends Component {
   /* * LIFE CYCLES * */
 
   /* 
-  This is so we can have a debounce effect on the query
-  launched by handleChange, by wrapping with lodash function
-
-  Also we can retrieve stored search history from localStorage
+    This is so we can have a debounce effect on the query
+    launched by handleChange, by wrapping with lodash function
+    Also we can retrieve stored search history from localStorage
   */
-
   componentWillMount() {
     this.debounceQuery = debounce(search => {
       this.searchQuery(search);
     }, 200);
-    const savedHistory = JSON.parse(localStorage.getItem("history"));
-    console.log(savedHistory);
-    // this.setState(({ history: prevHistory, ...rest }) => {
-    //   const savedHistory = JSON.parse(localStorage.getItem("history"));
-    //   console.log(savedHistory);
-    //   return {
-    //     ...rest,
-    //     history: savedHistory === null ? prevHistory : savedHistory
-    //   };
-    // });
+
+    const retrievedHistory = JSON.parse(localStorage.getItem("historySave"));
+
+    const savedHistory = retrievedHistory === null ? [] : retrievedHistory;
+
+    this.setState(({ history: prevHistory, ...rest }) => {
+      return {
+        ...rest,
+        history: savedHistory
+      };
+    });
   }
 
+  /*
+    This is so search history is saved when the user leave the page
+    or if the page refreshes
+  */
   componentDidMount() {
     window.addEventListener("beforeunload", this.saveHistory);
   }
 
-  /*
-  This is so search history is saved when the user leave the page
-  */
-
   componentWillUnmount() {
-    const { history } = this.state;
-    this.saveHistory(history);
+    window.addEventListener("beforeunload", this.saveHistory);
   }
 
   /* * EVENT HANDLER * */
 
+  /*
+    HandleChange takes care of the input value 
+    and set the suggestion state according to it and using
+    value stored in the history state
+  */
   handleChange = ({ target: { value } }) => {
     this.setState(
       ({
@@ -84,6 +91,10 @@ class MainProvider extends Component {
     this.debounceQuery(value);
   };
 
+  /*
+    handle the select options and filter the results state 
+    in the filter state searching for the value through it
+  */
   handleSelect = ({ target: { id } }) => {
     const { search } = this.state;
     this.setState(({ select: prevSelect, results, ...prevState }) => {
@@ -106,6 +117,10 @@ class MainProvider extends Component {
     });
   };
 
+  /*
+    when the user select a suggestion it replace the input value 
+    and trigger a search query
+  */
   handleSuggestion = ({ target: { id } }) => {
     this.setState(prevState => ({
       ...prevState,
@@ -116,6 +131,14 @@ class MainProvider extends Component {
 
   /* * QUERY FUNCTION * */
 
+  /*
+    Main function. Thought that using async/await would make it more readable
+    The logic is : 
+    1.retrieve data from query, 
+    2.sort it by score
+    3.If a select option is on, create a filter state
+    4.Rearrange results (and filter) into shelves
+  */
   searchQuery = async search => {
     const {
       REACT_APP_API_KEY: apiKey,
@@ -169,7 +192,6 @@ class MainProvider extends Component {
       }
     }
   };
-  
 
   /* * UTILS * */
 
@@ -184,12 +206,13 @@ class MainProvider extends Component {
   /*
   I am pretty sure there must be a regular expression 
   operating faster than this O(n2) func;
-  I tried to find it but lost a huge amount of time while doing so
 
   This is because even with the debounce func, we end up with 
   very large suggestion list filed with junk coming from history
 
   The idea is to parse the history state and purge every rundundant search;
+  This function will filter every little word and keep the most important ones
+  For instance It'll get rid of "a", "adv"...and keep "adventure"
 */
   makeHistory = history =>
     history.filter((e, index, arr) =>
@@ -198,10 +221,16 @@ class MainProvider extends Component {
         return acc;
       }, true)
     );
-
-  saveHistory = history =>
-    localStorage.setItem("history", JSON.stringify(history));
-
+  /*
+      Store history into localstorage
+  */
+  saveHistory = () => {
+    const { history } = this.state;
+    localStorage.setItem("historySave", JSON.stringify(history));
+  };
+  /*
+  Clear history from local storage
+  */
   clearHistory = () => {
     localStorage.removeItem("history");
     this.setState(prevState => ({
@@ -210,7 +239,10 @@ class MainProvider extends Component {
       history: []
     }));
   };
-
+  /*
+  Create a filter state by parsing the value according 
+  to the active select option
+  */
   filterResults = (select, results, search) => {
     const needle = search.toLowerCase();
     if (select === "date")
@@ -221,7 +253,9 @@ class MainProvider extends Component {
       filtered.toLowerCase().includes(needle)
     );
   };
-
+  /*
+  Parcels the results into pages, each being an array of 4 element
+  */
   shelvesGenerator = arr =>
     arr.reduce((acc, curr, i) => {
       acc[Math.floor(i / 4)].push(curr);
