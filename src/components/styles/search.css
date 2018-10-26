@@ -2,14 +2,6 @@
   box-sizing: border-box;
 }
 
-/* div {
-  display: inline;
-} */
-
-ul {
-  padding: 0;
-}
-
 .inner-form {
   background: #fff;
   display: flex;

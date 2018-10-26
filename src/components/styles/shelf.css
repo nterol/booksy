@@ -2,8 +2,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   padding: 0.5vh 0.1vw;
-
   margin: 3vh 0.15vw;
 }
