@@ -1,5 +1,9 @@
 import React from "react";
 
+import uuidv4 from "uuid";
+
+/* no update on list element, hence key in list are not really necessary */
+
 /*
     This behave exactly like the Parser Component 
     except it searches for the input value
@@ -15,15 +19,15 @@ export const Enlighter = ({ select, search, children }) => {
   const lines = children.replace(reg, replacer);
   const enhanced = lines.split("*");
   return enhanced.map(
-    (e, i) =>
+    (line, i) =>
       i === 1 ? (
-        <mark className={`${select}-marker`}>
+        <mark key={uuidv4()} className={`${select}-marker`}>
           &nbsp;
-          {e}
+          {line}
           &nbsp;
         </mark>
       ) : (
-        e
+        <React.Fragment key={uuidv4()}>{line}</React.Fragment>
       )
   );
 };
