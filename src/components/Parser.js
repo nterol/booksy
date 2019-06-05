@@ -7,22 +7,29 @@ import React from "react";
 
 const Parser = ({ children }) => {
   const replacer = (general, text) => {
-    return `<mark class="common-marker">&nbsp;${text}&nbsp;</mark>`;
+    return `*${text}*`;
   };
   /*
     Following regexp target the '<em>some text</em>' pattern
     and isolate the text group in order to access it
     in the above function 'replacer'
   */
-  const lines = children.replace(
-    /<\s*em[^>]*>([^<]*)<\s*\/\s*em\s*>/g,
-    replacer
+  const lines = children
+    .replace(/<\s*em[^>]*>([^<]*)<\s*\/\s*em\s*>/g, replacer)
+    .splice("*");
+
+  return lines.map(
+    (line, i) =>
+      i === 1 ? (
+        <mark className="common-marker">
+          &nbsp;
+          {line}
+          &nbsp;
+        </mark>
+      ) : (
+        line
+      )
   );
-  /*
-    the dangerouslySetInnerHTML function parses the object string
-    received from the const lines and transform what can be in HTML
-  */
-  return <pre dangerouslySetInnerHTML={{ __html: lines }} />;
 };
 
 export default Parser;

@@ -56,7 +56,7 @@ class MainProvider extends Component {
   }
 
   componentWillUnmount() {
-    window.addEventListener("beforeunload", this.saveHistory);
+    window.removeEventListener("beforeunload", this.saveHistory);
   }
 
   /* * EVENT HANDLER * */
@@ -144,7 +144,7 @@ class MainProvider extends Component {
       REACT_APP_API_KEY: apiKey,
       REACT_APP_SEARCH_QUERY: searchQuery
     } = process.env;
-    if (search !== "") {
+    if (search !== "" && search !== " ") {
       try {
         const { data } = await axios.request({
           url: `${searchQuery}${search}`,
